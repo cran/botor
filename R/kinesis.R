@@ -44,12 +44,12 @@ kinesis_get_shard_iterator <- function(stream, shard,
                                            'AT_SEQUENCE_NUMBER', 'AFTER_SEQUENCE_NUMBER', 'AT_TIMESTAMP'),
                                        ...) {
     shard_iterator_type <- match.arg(shard_iterator_type)
-    kinesis()$get_shard_iterator(StreamName = stream, ShardId = shard, ShardIteratorType = shard_iterator_type)
+    kinesis()$get_shard_iterator(StreamName = stream, ShardId = shard, ShardIteratorType = shard_iterator_type, ...)
 }
 
 #' Gets data records from a Kinesis data stream's shard
-#' @inheritParams kinesis_put_record
 #' @param shard_iterator the position in the shard from which you want to start sequentially reading data records, usually provided by \code{\link{kinesis_get_shard_iterator}}
+#' @param limit maximum number of records to return
 #' @export
 #' @return list of \code{Records}, \code{NextShardIterator} and \code{MillisBehindLatest}
 #' @references \url{https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/kinesis.html#Kinesis.Client.get_records}
@@ -58,6 +58,6 @@ kinesis_get_shard_iterator <- function(stream, shard,
 #' iterator <- kinesis_get_shard_iterator(stream = 'botor-tester', shard = '0')
 #' kinesis_get_records(iterator$ShardIterator)
 #' }
-kinesis_get_records <- function(shard_iterator) {
-    kinesis()$get_records(ShardIterator = shard_iterator)
+kinesis_get_records <- function(shard_iterator, limit = 25L) {
+    kinesis()$get_records(ShardIterator = shard_iterator, Limit = limit)
 }

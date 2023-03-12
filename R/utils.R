@@ -80,6 +80,14 @@ mime_guess <- function(file) {
 }
 
 
+#' Looks up major version of Python (eg 2 or 3)
+#' @return number
+#' @keywords internal
+python_version <- function() {
+    import('sys')$version_info$major
+}
+
+
 #' Transforms a python2 string literal or python3 bytes literal into an R string
 #'
 #' This is useful to call eg for the KMS call, where python2 returns a string, but python3 returns bytes literals -- calling "decode" is tricky, but bytearray conversion, then passing the raw vector to R and converting that a string works.
@@ -87,5 +95,9 @@ mime_guess <- function(file) {
 #' @return string
 #' @keywords internal
 coerce_bytes_literals_to_string <- function(x) {
-    rawToChar(require_python_builtins()$bytearray(x))
+    if (inherits(x, 'python.builtin.bytes')) {
+        rawToChar(require_python_builtins()$bytearray(x))
+    } else {
+        rawToChar(require_python_builtins()$bytearray(x, encoding = 'utf8'))
+    }
 }

@@ -1,6 +1,6 @@
 # botor: Reticulate wrapper on 'boto3'
 
-[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) ![CRAN](https://www.r-pkg.org/badges/version/botor) [![Build Status](https://travis-ci.org/daroczig/botor.svg?branch=master)](https://travis-ci.org/daroczig/botor) [![Code Coverage](https://codecov.io/gh/daroczig/botor/branch/master/graph/badge.svg)](https://codecov.io/gh/daroczig/botor)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) ![CRAN](https://www.r-pkg.org/badges/version/botor) [![Build Status](https://travis-ci.org/daroczig/botor.svg?branch=master)](https://travis-ci.org/daroczig/botor) [![Code Coverage](https://codecov.io/gh/daroczig/botor/branch/master/graph/badge.svg)](https://app.codecov.io/gh/daroczig/botor)
 
 This R package provides raw access to the 'Amazon Web Services' ('AWS') 'SDK' via the 'boto3' Python module and some convenient helper functions (currently for S3 and KMS) and workarounds, eg taking care of spawning new resources in forked R processes.
 
@@ -26,7 +26,7 @@ Loading the `botor` package might take a while as it will also `import` the `bot
 
 ```r
 system.time(library(botor))
-#>    user  system elapsed 
+#>    user  system elapsed
 #>   1.131   0.250   1.191
 ```
 
@@ -131,7 +131,7 @@ lapply(1:2, function(i) attr(botor(), 'pid'))
 mclapply(1:2, function(i) attr(botor(), 'pid'), mc.cores = 2)
 #> [[1]]
 #> [1] 13209
-#> 
+#>
 #> [[2]]
 #> [1] 13210
 ```
@@ -181,11 +181,11 @@ The convenient helper functions try to suppress the boring Python traceback and 
 
 ```r
 s3_download_file('s3://bottttor/example-data/mtcars.csv', tempfile())
-#> Error in s3_download_file("s3://bottttor/example-data/mtcars.csv", tempfile()) : 
+#> Error in s3_download_file("s3://bottttor/example-data/mtcars.csv", tempfile()) :
 #>   Python `ClientError`: An error occurred (404) when calling the HeadObject operation: Not Found
 
 s3_read('s3://botor/example-data/mtcars2.csv', read.csv)
-#> Error in s3_download(object, t) : 
+#> Error in s3_download(object, t) :
 #>   Python `ClientError`: An error occurred (403) when calling the HeadObject operation: Forbidden
 
 botor(region_name = 'us-west-2')
@@ -198,7 +198,7 @@ s3_read('s3://botor/example-data/mtcars.csv', read.csv)
 
 ## Logging
 
-`botor` uses the [`logger`](https://daroczig.github.io/logger) package to write log messages to the console by default with the following log level standards:
+`botor` uses the [`logger`](https://daroczig.github.io/logger/) package to write log messages to the console by default with the following log level standards:
 
 * `TRACE` start of an AWS query (eg just about to start listing all S3 buckets in an AWS account)
 * `DEBUG` summary on the result of an AWS query (eg number of S3 buckets found in an AWS account)
